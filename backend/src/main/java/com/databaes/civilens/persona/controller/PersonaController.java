@@ -51,7 +51,7 @@ public class PersonaController {
                                     "bplStatus": false
                                 },
                                 "geographic": {
-                                    "state": "Karnataka",
+                                    "state": "KARNATAKA",
                                     "district": "Bangalore",
                                     "areaType": "RURAL"
                                 },
@@ -82,7 +82,7 @@ public class PersonaController {
                                     "bplStatus": true
                                 },
                                 "geographic": {
-                                    "state": "Maharashtra",
+                                    "state": "MAHARASHTRA",
                                     "district": "Pune",
                                     "areaType": "URBAN"
                                 },
@@ -110,7 +110,7 @@ public class PersonaController {
                                     "bplStatus": false
                                 },
                                 "geographic": {
-                                    "state": "Tamil Nadu",
+                                    "state": "TAMIL_NADU",
                                     "district": "Chennai",
                                     "areaType": "URBAN"
                                 },
@@ -138,7 +138,7 @@ public class PersonaController {
                                     "bplStatus": false
                                 },
                                 "geographic": {
-                                    "state": "Gujarat",
+                                    "state": "GUJARAT",
                                     "district": "Ahmedabad",
                                     "areaType": "URBAN"
                                 },
