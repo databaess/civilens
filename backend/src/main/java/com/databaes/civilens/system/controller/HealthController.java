@@ -1,4 +1,4 @@
-package com.databaes.civilens.persona.controller;
+package com.databaes.civilens.system.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
