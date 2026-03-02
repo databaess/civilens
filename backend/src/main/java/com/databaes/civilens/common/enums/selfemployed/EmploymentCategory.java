@@ -1,4 +1,4 @@
-package com.databaes.civilens.persona.model.enums.selfemplyed;
+package com.databaes.civilens.common.enums.selfemployed;
 
 public enum EmploymentCategory {
     UNORGANISED,

@@ -1,7 +1,7 @@
 package com.databaes.civilens.persona.model;
 
-import com.databaes.civilens.persona.model.enums.core.Category;
-import com.databaes.civilens.persona.model.enums.core.Gender;
+import com.databaes.civilens.common.enums.core.Category;
+import com.databaes.civilens.common.enums.core.Gender;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

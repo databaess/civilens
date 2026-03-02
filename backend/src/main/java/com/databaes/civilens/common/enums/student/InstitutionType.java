@@ -1,4 +1,4 @@
-package com.databaes.civilens.persona.model.enums.student;
+package com.databaes.civilens.common.enums.student;
 
 public enum InstitutionType {
     GOVERNMENT,

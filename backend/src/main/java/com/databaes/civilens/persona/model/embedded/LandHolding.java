@@ -1,6 +1,6 @@
 package com.databaes.civilens.persona.model.embedded;
 
-import com.databaes.civilens.persona.model.enums.farmer.LandUnit;
+import com.databaes.civilens.common.enums.farmer.LandUnit;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

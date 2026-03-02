@@ -1,8 +1,8 @@
 package com.databaes.civilens.persona.model.occupation;
 
-import com.databaes.civilens.persona.model.enums.student.EducationLevel;
-import com.databaes.civilens.persona.model.enums.student.InstitutionType;
-import com.databaes.civilens.persona.model.enums.student.StreamType;
+import com.databaes.civilens.common.enums.student.EducationLevel;
+import com.databaes.civilens.common.enums.student.InstitutionType;
+import com.databaes.civilens.common.enums.student.StreamType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.databaes.civilens.persona.model.enums.core;
+package com.databaes.civilens.common.enums.core;
 
 public enum IndianState {
     ANDHRA_PRADESH,

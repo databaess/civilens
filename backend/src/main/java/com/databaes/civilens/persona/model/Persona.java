@@ -1,6 +1,6 @@
 package com.databaes.civilens.persona.model;
 
-import com.databaes.civilens.persona.model.enums.core.Language;
+import com.databaes.civilens.common.enums.core.Language;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

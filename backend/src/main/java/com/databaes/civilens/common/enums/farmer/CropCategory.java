@@ -1,4 +1,4 @@
-package com.databaes.civilens.persona.model.enums.farmer;
+package com.databaes.civilens.common.enums.farmer;
 
 public enum CropCategory {
     FOODGRAIN,

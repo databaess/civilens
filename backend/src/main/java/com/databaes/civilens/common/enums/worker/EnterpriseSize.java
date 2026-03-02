@@ -1,4 +1,4 @@
-package com.databaes.civilens.persona.model.enums.worker;
+package com.databaes.civilens.common.enums.worker;
 
 public enum EnterpriseSize {
     MICRO,

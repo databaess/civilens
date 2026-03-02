@@ -1,7 +1,7 @@
 package com.databaes.civilens.persona.model;
 
-import com.databaes.civilens.persona.model.enums.core.AreaType;
-import com.databaes.civilens.persona.model.enums.core.IndianState;
+import com.databaes.civilens.common.enums.core.AreaType;
+import com.databaes.civilens.common.enums.core.IndianState;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

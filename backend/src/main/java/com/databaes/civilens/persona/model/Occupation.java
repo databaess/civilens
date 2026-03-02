@@ -1,6 +1,6 @@
 package com.databaes.civilens.persona.model;
 
-import com.databaes.civilens.persona.model.enums.core.OccupationType;
+import com.databaes.civilens.common.enums.core.OccupationType;
 import com.databaes.civilens.persona.model.occupation.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

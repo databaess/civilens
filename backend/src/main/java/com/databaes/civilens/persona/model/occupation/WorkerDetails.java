@@ -1,7 +1,7 @@
 package com.databaes.civilens.persona.model.occupation;
 
-import com.databaes.civilens.persona.model.enums.selfemplyed.EmploymentCategory;
-import com.databaes.civilens.persona.model.enums.selfemplyed.IndustryType;
+import com.databaes.civilens.common.enums.selfemployed.EmploymentCategory;
+import com.databaes.civilens.common.enums.selfemployed.IndustryType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

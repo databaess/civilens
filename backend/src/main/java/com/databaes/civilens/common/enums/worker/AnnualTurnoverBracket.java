@@ -1,4 +1,4 @@
-package com.databaes.civilens.persona.model.enums.worker;
+package com.databaes.civilens.common.enums.worker;
 
 public enum AnnualTurnoverBracket {
     ZERO_TO_5L,

@@ -1,6 +1,6 @@
 package com.databaes.civilens.persona.model;
 
-import com.databaes.civilens.persona.model.enums.core.IncomeBracket;
+import com.databaes.civilens.common.enums.core.IncomeBracket;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
