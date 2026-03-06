@@ -67,6 +67,12 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), "Validation error", null);
     }
 
+    @ExceptionHandler(UpstreamServiceException.class)
+    public ResponseEntity<ErrorResponse> handleUpstreamServiceException(UpstreamServiceException ex) {
+        log.warn("Upstream service error: {}", ex.getMessage());
+        return buildErrorResponse(HttpStatus.BAD_GATEWAY, ex.getMessage(), "Upstream service error", null);
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
         String errorMessage = "Invalid JSON format or invalid enum value";
