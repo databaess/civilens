@@ -161,12 +161,12 @@ app.post("/vector-search", async (req, res) => {
     const inc = persona.incomeBracket.toLowerCase();
 
     const incomeMap = {
-      "low": "UPTO_1L",
-      "low income": "UPTO_1L",
+      "low": "ZERO_TO_1L",
+      "low income": "ZERO_TO_1L",
       "middle": "ONE_TO_3L",
       "middle income": "THREE_TO_5L",
-      "high": "FIVE_TO_8L",
-      "poor": "UPTO_1L"
+      "high": "FIVE_L_PLUS",
+      "poor": "ZERO_TO_1L"
     };
 
     persona.incomeBracket = incomeMap[inc] || persona.incomeBracket;
@@ -278,15 +278,12 @@ Income group: ${persona.incomeBracket || "unknown"}
   --------------------------------
   */
 
-  const response = ranked.map((item) => ({
-    id: item.scheme.schemeId,
-    title: item.scheme.title,
-    category: item.scheme.category,
-    summary: item.scheme.summary,
-    benefits: item.scheme.benefits.description,
-    applicationMode: item.scheme.applicationMode,
-    officialLink: item.scheme.officialLink
-  }));
+  const response = ranked.map((item) => {
+    // Return original scheme exactly as JSON
+    const schemeObj = { ...item.scheme };
+    delete schemeObj.embedding;
+    return schemeObj;
+  });
 
   const topResults = response.slice(0, 5);
 
