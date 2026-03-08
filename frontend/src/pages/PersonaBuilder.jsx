@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, ChevronLeft, CheckCircle2, Loader2, Sparkles } from 'lucide-react';
+import { ChevronRight, ChevronLeft, CheckCircle2, Loader2, Sparkles, Mic } from 'lucide-react';
 
 const steps = [
     { id: 1, title: 'Demographics' },
@@ -481,7 +481,7 @@ const PersonaBuilder = () => {
 
                 <div className="text-center mb-8">
                     <h1 className="text-3xl font-bold text-slate-900 mb-2">Build Your Persona</h1>
-                    <p className="text-slate-500">Find exactly what you are eligible for securely.</p>
+                    <p className="text-slate-500 mb-4">Find exactly what you are eligible for securely.</p>
                 </div>
 
                 <div className="glass-card overflow-hidden">
@@ -527,6 +527,18 @@ const PersonaBuilder = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Floating Chatbot STT Button */}
+            <button
+                onClick={() => navigate('/stt')}
+                className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-primary-600 text-white rounded-full shadow-lg hover:bg-primary-700 hover:scale-105 transition-all duration-300 group"
+                aria-label="Use Voice Assistant"
+            >
+                <Mic size={26} className="group-hover:animate-bounce" />
+                <span className="absolute right-16 bg-slate-900 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity pointer-events-none shadow-md">
+                    Try Voice Assistant
+                </span>
+            </button>
         </div>
     );
 };

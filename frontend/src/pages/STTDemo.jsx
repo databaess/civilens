@@ -5,6 +5,7 @@ import { extractFields } from "../chatbot/extractFields";
 import { getMissingFields } from "../chatbot/missingFields";
 import { nextQuestion } from "../chatbot/questions";
 import { buildResponse } from "../chatbot/buildResponse";
+import { useNavigate } from "react-router-dom";
 
 function STTDemo() {
     const [language, setLanguage] = useState("en-IN");
@@ -14,6 +15,8 @@ function STTDemo() {
     const [persona, setPersona] = useState(personaTemplate);
     const [question, setQuestion] = useState("Tell me about yourself.");
     const [currentField, setCurrentField] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const navigate = useNavigate();
     const sttTokenUrl = import.meta.env.VITE_APP_STT_TOKEN_URL;
 
     const startListening = async () => {
@@ -81,6 +84,45 @@ function STTDemo() {
         }
     };
 
+    const isFilled = getMissingFields(persona).length === 0;
+
+    const handleSubmit = async () => {
+        setIsSubmitting(true);
+        setStatus("Submitting to scheme engine...");
+
+        // Deep copy the persona, stringify/correct numeric values if needed
+        const payload = JSON.parse(JSON.stringify(persona));
+
+        try {
+            const backendBaseUrl = import.meta.env.VITE_APP_BACKEND_URL;
+
+            const response = await fetch(`${backendBaseUrl}/detect`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            // Persist the persona payload strictly into local storage
+            localStorage.setItem('civilens_persona', JSON.stringify(payload));
+
+            setStatus("Success! Redirecting...");
+            setTimeout(() => {
+                navigate('/schemes', { state: { persona: payload, schemes: data.schemes || [] } });
+            }, 1000);
+
+        } catch (err) {
+            console.error("Failed to detect schemes from STT payload: ", err);
+            setStatus(`Error details: ${err.message}`);
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <div className="pt-24 pb-10 min-h-screen bg-slate-50">
             <div className="max-w-4xl mx-auto px-4">
@@ -105,10 +147,17 @@ function STTDemo() {
                     <div className="mt-4">
                         <button
                             onClick={startListening}
-                            disabled={listening}
+                            disabled={listening || isSubmitting}
                             className="bg-primary-600 hover:bg-primary-700 disabled:opacity-60 text-white px-5 py-2.5 rounded-lg font-semibold"
                         >
                             {listening ? "Listening..." : "Start Speaking"}
+                        </button>
+                        <button
+                            onClick={handleSubmit}
+                            disabled={!isFilled || isSubmitting}
+                            className="bg-india-green-500 hover:bg-india-green-600 disabled:opacity-50 text-white px-5 py-2.5 rounded-lg font-semibold ml-auto"
+                        >
+                            {isSubmitting ? "Finding Schemes..." : "Find Schemes"}
                         </button>
                     </div>
 
