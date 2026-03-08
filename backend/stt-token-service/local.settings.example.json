@@ -1,0 +1,9 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "SPEECH_KEY": "your_speech_key_here",
+    "SPEECH_REGION": "your_speech_region_here"
+  }
+}
