@@ -12,10 +12,10 @@ export function extractFields(text, persona, language = "en-IN", currentField = 
   function mapIncomeNumberToBracket(amount) {
     if (amount === null || Number.isNaN(amount)) return null;
 
-    if (amount < 100000) return "BELOW_1_LAKH";
-    if (amount >= 100000 && amount <= 300000) return "ONE_TO_THREE_LAKH";
-    if (amount > 300000 && amount <= 500000) return "THREE_TO_FIVE_LAKH";
-    if (amount > 500000) return "ABOVE_5_LAKH";
+    if (amount >= 0 && amount <= 100000) return "ZERO_TO_1L";
+    if (amount > 100000 && amount <= 300000) return "ONE_TO_3L";
+    if (amount > 300000 && amount <= 500000) return "THREE_TO_5L";
+    if (amount > 500000) return "FIVE_L_PLUS";
 
     return null;
   }
@@ -63,43 +63,43 @@ export function extractFields(text, persona, language = "en-IN", currentField = 
   };
 
   const incomeMap = [
-  {
-    value: "BELOW_1_LAKH",
-    patterns: [
-      "below 1 lakh", "less than 1 lakh", "under 1 lakh",
-      "0 to 1 lakh", "zero to one lakh",
-      "1 लाख से कम", "एक लाख से कम", "0 से 1 लाख",
-      "1 लाखाच्या खाली", "0 ते 1 लाख",
-      "1 லட்சத்திற்குக் கீழே", "0 முதல் 1 லட்சம்"
-    ],
-  },
-  {
-    value: "ONE_TO_THREE_LAKH",
-    patterns: [
-      "1 to 3 lakh", "one to three lakh",
-      "1 से 3 लाख", "एक से तीन लाख",
-      "1 ते 3 लाख",
-      "1 முதல் 3 லட்சம்"
-    ],
-  },
-  {
-    value: "THREE_TO_FIVE_LAKH",
-    patterns: [
-      "3 to 5 lakh", "three to five lakh",
-      "3 से 5 लाख",
-      "3 ते 5 लाख",
-      "3 முதல் 5 லட்சம்"
-    ],
-  },
-  {
-    value: "ABOVE_5_LAKH",
-    patterns: [
-      "above 5 lakh", "more than 5 lakh", "over 5 lakh", "5 lakh plus",
-      "5 लाख से ज्यादा", "5 लाख से अधिक",
-      "5 लाखांपेक्षा जास्त",
-      "5 லட்சத்திற்கு மேல்"
-    ],
-  },
+    {
+      value: "ZERO_TO_1L",
+      patterns: [
+        "below 1 lakh", "less than 1 lakh", "under 1 lakh",
+        "0 to 1 lakh", "zero to 1 lakh",
+        "1 लाख से कम", "एक लाख से कम", "0 से 1 लाख",
+        "1 लाखाच्या खाली", "0 ते 1 लाख",
+        "1 லட்சத்திற்குக் கீழே", "0 முதல் 1 லட்சம்"
+      ],
+    },
+    {
+      value: "ONE_TO_3L",
+      patterns: [
+        "1 to 3 lakh", "one to three lakh",
+        "1 से 3 लाख", "एक से तीन लाख",
+        "1 ते 3 लाख",
+        "1 முதல் 3 லட்சம்"
+      ],
+    },
+    {
+      value: "THREE_TO_5L",
+      patterns: [
+        "3 to 5 lakh", "three to five lakh",
+        "3 से 5 लाख",
+        "3 ते 5 लाख",
+        "3 முதல் 5 லட்சம்"
+      ],
+    },
+    {
+      value: "FIVE_L_PLUS",
+      patterns: [
+        "above 5 lakh", "more than 5 lakh", "over 5 lakh", "5 lakh plus",
+        "5 लाख से ज्यादा", "5 लाख से अधिक",
+        "5 लाखांपेक्षा जास्त",
+        "5 லட்சத்திற்கு மேல்"
+      ],
+    },
   ];
 
   const ageWordMap = {
