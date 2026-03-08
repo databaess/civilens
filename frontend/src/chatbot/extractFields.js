@@ -12,8 +12,8 @@ export function extractFields(text, persona, language = "en-IN", currentField = 
   function mapIncomeNumberToBracket(amount) {
     if (amount === null || Number.isNaN(amount)) return null;
 
-    if (amount >= 0 && amount <= 100000) return "ZERO_TO_1L";
-    if (amount > 100000 && amount <= 300000) return "ONE_TO_3L";
+    if (amount < 100000) return "ZERO_TO_1L";
+    if (amount >= 100000 && amount <= 300000) return "ONE_TO_3L";
     if (amount > 300000 && amount <= 500000) return "THREE_TO_5L";
     if (amount > 500000) return "FIVE_L_PLUS";
 
@@ -63,44 +63,62 @@ export function extractFields(text, persona, language = "en-IN", currentField = 
   };
 
   const incomeMap = [
-    {
-      value: "ZERO_TO_1L",
-      patterns: [
-        "below 1 lakh", "less than 1 lakh", "under 1 lakh",
-        "0 to 1 lakh", "zero to 1 lakh",
-        "1 लाख से कम", "एक लाख से कम", "0 से 1 लाख",
-        "1 लाखाच्या खाली", "0 ते 1 लाख",
-        "1 லட்சத்திற்குக் கீழே", "0 முதல் 1 லட்சம்"
-      ],
-    },
-    {
-      value: "ONE_TO_3L",
-      patterns: [
-        "1 to 3 lakh", "one to three lakh",
-        "1 से 3 लाख", "एक से तीन लाख",
-        "1 ते 3 लाख",
-        "1 முதல் 3 லட்சம்"
-      ],
-    },
-    {
-      value: "THREE_TO_5L",
-      patterns: [
-        "3 to 5 lakh", "three to five lakh",
-        "3 से 5 लाख",
-        "3 ते 5 लाख",
-        "3 முதல் 5 லட்சம்"
-      ],
-    },
-    {
-      value: "FIVE_L_PLUS",
-      patterns: [
-        "above 5 lakh", "more than 5 lakh", "over 5 lakh", "5 lakh plus",
-        "5 लाख से ज्यादा", "5 लाख से अधिक",
-        "5 लाखांपेक्षा जास्त",
-        "5 லட்சத்திற்கு மேல்"
-      ],
-    },
-  ];
+  {
+    value: "ZERO_TO_1L",
+    patterns: [
+      "below 1 lakh", "less than 1 lakh", "under 1 lakh",
+      "0 to 1 lakh", "zero to one lakh",
+      "1 लाख से कम", "एक लाख से कम", "0 से 1 लाख",
+      "1 लाखाच्या खाली", "0 ते 1 लाख",
+      "1 லட்சத்திற்குக் கீழே", "0 முதல் 1 லட்சம்"
+    ],
+  },
+  {
+    value: "ONE_TO_3L",
+    patterns: [
+      "1 to 3 lakh", "one to three lakh",
+      "1 से 3 लाख", "एक से तीन लाख",
+      "1 ते 3 लाख",
+      "1 முதல் 3 லட்சம்"
+    ],
+  },
+  {
+    value: "THREE_TO_5L",
+    patterns: [
+      "3 to 5 lakh", "three to five lakh",
+      "3 से 5 लाख",
+      "3 ते 5 लाख",
+      "3 முதல் 5 லட்சம்"
+    ],
+  },
+  {
+    value: "FIVE_L_PLUS",
+    patterns: [
+      "above 5 lakh", "more than 5 lakh", "over 5 lakh", "5 lakh plus",
+      "5 लाख से ज्यादा", "5 लाख से अधिक",
+      "5 लाखांपेक्षा जास्त",
+      "5 லட்சத்திற்கு மேல்"
+    ],
+  },
+  {
+    value: "ANY",
+    patterns: [
+      "any income", "any", "no restriction",
+      "कोई भी आय", "कुछ भी", "किसी भी आय",
+      "कोणतेही उत्पन्न",
+      "எந்த வருமானமும்"
+    ],
+  },
+  {
+    value: "NONE",
+    patterns: [
+      "none", "not applicable", "don't know",
+      "नहीं पता", "पता नहीं",
+      "माहित नाही",
+      "தெரியாது"
+    ],
+  }
+];
 
   const ageWordMap = {
     "fifty two": 52,
@@ -130,6 +148,80 @@ export function extractFields(text, persona, language = "en-IN", currentField = 
     "இரண்டு ஏக்கர்": 2,
   };
 
+  const educationMap = {
+    SCHOOL: [
+      "school", "school student",
+      "स्कूल", "विद्यालय", "शाळा",
+      "பள்ளி"
+    ],
+    UNDERGRAD: [
+      "undergraduate", "college", "bachelor", "graduation",
+      "कॉलेज", "ग्रेजुएशन", "स्नातक",
+      "कॉलेज", "पदवी",
+      "கல்லூரி", "இளநிலை"
+    ],
+    POSTGRAD: [
+      "postgraduate", "masters", "master", "phd",
+      "पोस्टग्रेजुएट", "मास्टर्स", "पीएचडी",
+      "पदव्युत्तर", "मास्टर्स",
+      "முதுநிலை", "மேற்படிப்பு"
+    ],
+    DIPLOMA: [
+      "diploma",
+      "डिप्लोमा",
+      "डिप्लोमा",
+      "டிப்ளமோ"
+    ],
+  };
+
+  const workerCategoryMap = {
+    SALARIED: [
+      "salaried", "salary",
+      "सैलरीड", "वेतनभोगी",
+      "पगारदार",
+      "சம்பளதாரி"
+    ],
+    DAILY_WAGE: [
+      "daily wage", "daily worker",
+      "दिहाड़ी", "दैनिक मजदूर",
+      "दैनिक मजूर",
+      "தினக்கூலி"
+    ],
+    CONTRACT: [
+      "contract", "contract worker",
+      "कॉन्ट्रैक्ट", "ठेका",
+      "कॉन्ट्रॅक्ट",
+      "ஒப்பந்தம்"
+    ],
+    INFORMAL: [
+      "informal", "unorganised",
+      "अनौपचारिक", "असंगठित",
+      "अनौपचारिक",
+      "ஒழுங்கற்ற"
+    ],
+  };
+
+  const sectorMap = {
+    RETAIL: [
+      "retail", "shop", "store",
+      "रिटेल", "दुकान",
+      "रिटेल", "दुकान",
+      "ரீட்டெயில்", "கடை"
+    ],
+    SERVICES: [
+      "services", "service",
+      "सर्विस", "सेवाएं",
+      "सेवा", "सर्व्हिसेस",
+      "சேவைகள்"
+    ],
+    MANUFACTURING: [
+      "manufacturing", "factory", "production",
+      "मैन्युफैक्चरिंग", "फैक्टरी", "उत्पादन",
+      "मॅन्युफॅक्चरिंग", "कारखाना",
+      "உற்பத்தி", "தொழிற்சாலை"
+    ],
+  };
+
   // STATE
   for (const [state, patterns] of Object.entries(stateMap)) {
     if (patterns.some((p) => lower.includes(p.toLowerCase()))) {
@@ -150,6 +242,36 @@ export function extractFields(text, persona, language = "en-IN", currentField = 
   for (const [occupation, patterns] of Object.entries(occupationMap)) {
     if (patterns.some((p) => lower.includes(p.toLowerCase()))) {
       updated.occupation.type = occupation;
+
+      if (occupation === "FARMER") {
+        updated.occupation.details = {
+          farmerDetails: {
+            landHolding: {
+              value: null,
+              unit: "ACRE",
+            },
+          },
+        };
+      } else if (occupation === "STUDENT") {
+        updated.occupation.details = {
+          studentDetails: {
+            educationLevel: null,
+          },
+        };
+      } else if (occupation === "WORKER") {
+        updated.occupation.details = {
+          workerDetails: {
+            employmentCategory: null,
+          },
+        };
+      } else if (occupation === "SELF_EMPLOYED") {
+        updated.occupation.details = {
+          selfEmployedDetails: {
+            sector: null,
+          },
+        };
+      }
+
       break;
     }
   }
@@ -158,6 +280,57 @@ export function extractFields(text, persona, language = "en-IN", currentField = 
   for (const [category, patterns] of Object.entries(categoryMap)) {
     if (patterns.some((p) => lower.includes(p.toLowerCase()))) {
       updated.demographics.category = category;
+      break;
+    }
+  }
+
+  // EDUCATION
+  for (const [educationLevel, patterns] of Object.entries(educationMap)) {
+    if (patterns.some((p) => lower.includes(p.toLowerCase()))) {
+      if (updated.occupation.type === "STUDENT") {
+        if (!updated.occupation.details?.studentDetails) {
+          updated.occupation.details = {
+            studentDetails: {
+              educationLevel: null,
+            },
+          };
+        }
+        updated.occupation.details.studentDetails.educationLevel = educationLevel;
+      }
+      break;
+    }
+  }
+
+  // WORKER EMPLOYMENT CATEGORY
+  for (const [employmentCategory, patterns] of Object.entries(workerCategoryMap)) {
+    if (patterns.some((p) => lower.includes(p.toLowerCase()))) {
+      if (updated.occupation.type === "WORKER") {
+        if (!updated.occupation.details?.workerDetails) {
+          updated.occupation.details = {
+            workerDetails: {
+              employmentCategory: null,
+            },
+          };
+        }
+        updated.occupation.details.workerDetails.employmentCategory = employmentCategory;
+      }
+      break;
+    }
+  }
+
+  // SELF EMPLOYED SECTOR
+  for (const [sector, patterns] of Object.entries(sectorMap)) {
+    if (patterns.some((p) => lower.includes(p.toLowerCase()))) {
+      if (updated.occupation.type === "SELF_EMPLOYED") {
+        if (!updated.occupation.details?.selfEmployedDetails) {
+          updated.occupation.details = {
+            selfEmployedDetails: {
+              sector: null,
+            },
+          };
+        }
+        updated.occupation.details.selfEmployedDetails.sector = sector;
+      }
       break;
     }
   }
@@ -198,7 +371,7 @@ export function extractFields(text, persona, language = "en-IN", currentField = 
             updated.economic.incomeBracket = "THREE_TO_5L";
           } else {
             updated.economic.incomeBracket = "FIVE_L_PLUS";
-}
+          }
 
           incomeMatched = true;
           break;
@@ -265,13 +438,37 @@ export function extractFields(text, persona, language = "en-IN", currentField = 
   // LAND
   const landMatch = lower.match(/(\d+(\.\d+)?)\s*(acre|acres|एकड़|एकर|ಎಕರೆ|ஏக்கர்)/);
   if (landMatch) {
-    updated.occupation.details.farmerDetails.landHolding.value = parseFloat(landMatch[1]);
-    updated.occupation.details.farmerDetails.landHolding.unit = "ACRE";
+    if (updated.occupation.type === "FARMER") {
+      if (!updated.occupation.details?.farmerDetails) {
+        updated.occupation.details = {
+          farmerDetails: {
+            landHolding: {
+              value: null,
+              unit: "ACRE",
+            },
+          },
+        };
+      }
+      updated.occupation.details.farmerDetails.landHolding.value = parseFloat(landMatch[1]);
+      updated.occupation.details.farmerDetails.landHolding.unit = "ACRE";
+    }
   } else {
     for (const [phrase, value] of Object.entries(landWordMap)) {
       if (lower.includes(phrase.toLowerCase())) {
-        updated.occupation.details.farmerDetails.landHolding.value = value;
-        updated.occupation.details.farmerDetails.landHolding.unit = "ACRE";
+        if (updated.occupation.type === "FARMER") {
+          if (!updated.occupation.details?.farmerDetails) {
+            updated.occupation.details = {
+              farmerDetails: {
+                landHolding: {
+                  value: null,
+                  unit: "ACRE",
+                },
+              },
+            };
+          }
+          updated.occupation.details.farmerDetails.landHolding.value = value;
+          updated.occupation.details.farmerDetails.landHolding.unit = "ACRE";
+        }
         break;
       }
     }
