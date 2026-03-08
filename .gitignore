@@ -35,3 +35,5 @@ MANIFEST
 .env
 .env.*
 !.env.example
+backend/docker.env
+frontend/docker.env
