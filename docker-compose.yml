@@ -34,18 +34,6 @@ services:
     networks:
       - civilens-net
 
-  azurite:
-    image: mcr.microsoft.com/azure-storage/azurite
-    command: azurite --blobHost 0.0.0.0 --queueHost 0.0.0.0 --tableHost 0.0.0.0
-    ports:
-      - "10000:10000"
-      - "10001:10001"
-      - "10002:10002"
-    volumes:
-      - azurite-data:/data
-    networks:
-      - civilens-net
-
   stt-token-service:
     build:
       context: ./backend/stt-token-service
@@ -54,15 +42,6 @@ services:
       - ./backend/docker.env
     environment:
       FUNCTIONS_WORKER_RUNTIME: node
-      AzureWebJobsStorage: >-
-        DefaultEndpointsProtocol=http;
-        AccountName=devstoreaccount1;
-        AccountKey=Eby8vdM02xNoGVfG7fR4q8A7q+4qjB4Y8r8B9S+fJ6c=;
-        BlobEndpoint=http://azurite:10000/devstoreaccount1;
-        QueueEndpoint=http://azurite:10001/devstoreaccount1;
-        TableEndpoint=http://azurite:10002/devstoreaccount1;
-    depends_on:
-      - azurite
     ports:
       - "7071:7071"
     networks:
@@ -86,6 +65,3 @@ services:
 networks:
   civilens-net:
     driver: bridge
-
-volumes:
-  azurite-data:

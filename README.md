@@ -11,6 +11,7 @@ Edit `backend/docker.env` and set real values for at least:
 - `GEMINI_API_KEY`
 - `AZURE_SPEECH_KEY`
 - `SPEECH_KEY`
+- `AzureWebJobsStorage` (Azure Storage connection string)
 
 Run the project:
 
